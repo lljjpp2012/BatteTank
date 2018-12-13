@@ -31,6 +31,24 @@ void ATankAIController::BeginPlay()
 
 }
 
+void ATankAIController::Tick(float DeltaTime)
+{
+	if (!GetControlledTank()) { return; }
+	//Get world location if linetrace through crosshair
+	//if it hits the landscape
+	//Tell controlled tank to aim at this point
+	if (GetPlayerTank())
+	{
+		FVector OutHitLocation = GetPlayerTank()->GetActorLocation();
+
+
+		GetControlledTank()->AimAt(OutHitLocation);
+	}
+
+	
+	
+}
+
 ATank * ATankAIController::GetPlayerTank() const
 {
 	auto PlayerPawn=
