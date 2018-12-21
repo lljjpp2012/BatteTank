@@ -26,7 +26,7 @@ void AMyPlayerController::AimTowardsCrosshair()
 	//Tell controlled tank to aim at this point
 	
 
-	FVector OutHitLocation=FVector(10,10,10); //Out Parameter
+	FVector OutHitLocation(0); //Out Parameter
 	if (GetSightRayHitLocation(OutHitLocation))//Has "side-effect",is going to line trace
 	{
 		GetControlledTank()->AimAt(OutHitLocation);
@@ -59,9 +59,9 @@ bool AMyPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector & L
 	FVector Temp;
 	if (DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, Temp, LookDirection))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("ScreenLocation:%s"), *LookDirection.ToString());
+		return true;
 	}
-	return true;
+	return false;
 }
 
 bool AMyPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector & HitLocation) const

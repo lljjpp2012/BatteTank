@@ -26,7 +26,7 @@ protected:
 
 public:	
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	/*virtual void Tick(float DeltaTime) override;*/
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -37,5 +37,5 @@ public:
 	void SetBarrelReference(UTankBarrel*BarrelToSet);
 
 	UPROPERTY(EditAnywhere, Category = Firing)
-		float LaunchSpeed = 10000;//Sensible starting value of 1000m/s
+		float LaunchSpeed = 100000;//Sensible starting value of 1000m/s
 };

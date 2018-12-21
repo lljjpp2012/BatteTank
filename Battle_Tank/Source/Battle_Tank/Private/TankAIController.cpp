@@ -2,6 +2,7 @@
 
 #include "TankAIController.h"
 #include "MyPlayerController.h"
+#include "Engine/World.h"
 ATank* ATankAIController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
