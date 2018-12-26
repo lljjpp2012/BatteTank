@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "Tankaimingcomponent.generated.h"
 
 //class UTankBarrel;//Forward Declaration
@@ -21,6 +22,7 @@ public:
 
 	void SetBarrelReference(UTankBarrel*BarrelToSet);
 
+	void SetTurretReference(UTankTurret*TurretToSet);
 	
 
 protected:
@@ -38,4 +40,5 @@ public:
 private:
 	void MoveBarrelTowards(FVector AimDirection);
 	UTankBarrel*Barrel = nullptr;
+	UTankTurret*Turret = nullptr;
 };

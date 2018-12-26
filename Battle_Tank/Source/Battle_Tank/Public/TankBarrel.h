@@ -16,12 +16,12 @@ class BATTLE_TANK_API UTankBarrel : public UStaticMeshComponent
 
 public:
 	//-1 is max downward speed,and +1 is max up movement
-	void Elevate(float RelativePersecond);
+	void Elevate(float RelativeSpeed);
 private:
 	UPROPERTY(EditAnywhere,Category = Setup)//"Category"指在引擎中属性栏的名称，创建了一个名叫"TankBarrel"的属性栏包含了此成员变量
 		float MaxDegreesParSecond = 20;//Sensible default
 	UPROPERTY(EditAnywhere, Category = Setup)
-		float MinDegreesParSecond = 5;
+		float MinDegreesParSecond = 0;
 	UPROPERTY(EditAnywhere, Category = Setup)
 		float MaxElevationDegress = 300;
 	UPROPERTY(EditAnywhere, Category = Setup)

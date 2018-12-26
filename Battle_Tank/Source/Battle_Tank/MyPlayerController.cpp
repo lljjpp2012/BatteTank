@@ -40,7 +40,7 @@ bool AMyPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
 	int32 ViewporSizeX, ViewportSizeY;
 	GetViewportSize(ViewporSizeX, ViewportSizeY);
 	auto ScreenLocation = FVector2D(ViewporSizeX*CrossHairXLocation, ViewportSizeY*CrossHairYLocation);
-	//UE_LOG(LogTemp, Warning, TEXT("ScreenLocation:%s"), *ScreenLocation.ToString());
+	UE_LOG(LogTemp, Warning, TEXT("ScreenLocation:%s"), *ScreenLocation.ToString());
 	//"De-project" the screen position of the crosshair to a world direction
 	//Line-trace along that Lookdirection,and see what we hit(up to max range)
 	FVector LookDirection;

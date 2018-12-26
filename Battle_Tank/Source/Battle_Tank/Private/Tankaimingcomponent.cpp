@@ -25,6 +25,11 @@ void UTankaimingcomponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 
 }
 
+void UTankaimingcomponent::SetTurretReference(UTankTurret * TurretToSet)
+{
+	Turret = TurretToSet;
+}
+
 
 
 
@@ -71,13 +76,35 @@ void UTankaimingcomponent::AimAt(FVector OutHitLocation,float LaunchSpeed)
 void UTankaimingcomponent::MoveBarrelTowards(FVector AimDirection)
 {
 	//work-out difference between current barrel roation,and AimDirection
-	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
+	auto BarrelRotator = Barrel->GetRightVector().Rotation();
+	auto TurretRotator = Turret->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
-	auto DeltaRotator = AimAsRotator - BarrelRotator;
 	
-
+	
+	auto DeltaRotator = AimAsRotator + BarrelRotator;
+	auto DeltaRotator2 = AimAsRotator - TurretRotator;
+	
+	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator:%s,%s,%s "), *AimAsRotator.ToString(), *TurretRotator.ToString(), *BarrelRotator.ToString())
+		
+		if(DeltaRotator2.Yaw>90.f)
+		{
+			DeltaRotator2.Yaw -= 360.f;
+			Turret->Elevate(DeltaRotator2.Yaw + 90);
+		}
+	    else if (DeltaRotator2.Yaw <-270.f)
+	    {
+			DeltaRotator2.Yaw += 360.f;
+		Turret->Elevate(DeltaRotator2.Yaw - 90);
+	     }
+		else
+		{
+				Turret->Elevate(DeltaRotator2.Yaw + 90);
+		}
+	
 		//Work-out difference between current barrel roation,and aimDirection
 		//Move the barrel the right amount this frame
 		//Given a max elevation speed,and the frame time
-		Barrel->Elevate(1);
+		Barrel->Elevate(DeltaRotator.Pitch);
+	    
+
 }
