@@ -30,6 +30,12 @@ void UTankaimingcomponent::SetTurretReference(UTankTurret * TurretToSet)
 	Turret = TurretToSet;
 }
 
+void UTankaimingcomponent::SetTrackReference(UTankTrack * LeftTrackToSet,UTankTrack*RightTrackToSet)
+{
+	LeftTrack = LeftTrackToSet;
+	RightTrack = RightTrackToSet;
+}
+
 
 
 
@@ -42,7 +48,7 @@ void UTankaimingcomponent::AimAt(FVector OutHitLocation,float LaunchSpeed)
 
 	FVector OutLaunchVelocity(0);
 	FVector StartLocation= Barrel->GetSocketLocation(FName("projectile"));
-	UE_LOG(LogTemp, Warning, TEXT(" StartLocation is %s"), *StartLocation.ToString())
+	//UE_LOG(LogTemp, Warning, TEXT(" StartLocation is %s"), *StartLocation.ToString())
 	bool bHaveAimSolution =
 		(UGameplayStatics::SuggestProjectileVelocity(this,
 			OutLaunchVelocity,
@@ -59,21 +65,13 @@ void UTankaimingcomponent::AimAt(FVector OutHitLocation,float LaunchSpeed)
 	auto TankName = GetOwner()->GetName();
 
 	MoveBarrelTowards(AimDirection);
-
+	}
 	
-	UE_LOG(LogTemp, Warning, TEXT(" aim solution found to %s" ),*AimDirection.Rotation().ToString())
-	}
-	else
-	{
-		
-		UE_LOG(LogTemp,Warning,TEXT("No aim solve found"))
-
-	}
 
 	
 }
 
-void UTankaimingcomponent::MoveBarrelTowards(FVector AimDirection)
+void UTankaimingcomponent::MoveBarrelTowards(FVector AimDirection)//360度锁要注意一共有4个值 2个变量 2个常量
 {
 	//work-out difference between current barrel roation,and AimDirection
 	auto BarrelRotator = Barrel->GetRightVector().Rotation();
@@ -84,7 +82,6 @@ void UTankaimingcomponent::MoveBarrelTowards(FVector AimDirection)
 	auto DeltaRotator = AimAsRotator + BarrelRotator;
 	auto DeltaRotator2 = AimAsRotator - TurretRotator;
 	
-	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator:%s,%s,%s "), *AimAsRotator.ToString(), *TurretRotator.ToString(), *BarrelRotator.ToString())
 		
 		if(DeltaRotator2.Yaw>90.f)
 		{

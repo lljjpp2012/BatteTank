@@ -35,7 +35,7 @@ private:
 	UPROPERTY(EditAnywhere)
 	float CrossHairYLocation=0.3333;
 	UPROPERTY(EditAnywhere)
-	float LineTraceRange = 1000000;
+	float LineTraceRange = 100000;
 	FVector PlayerViewPointLocation;
 	FRotator PlayerViewPointRocation;
 	

@@ -3,59 +3,36 @@
 #include "TankAIController.h"
 #include "MyPlayerController.h"
 #include "Engine/World.h"
-ATank* ATankAIController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
 
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
-	auto ControlledTank = GetControlledTank();
-	if (!ControlledTank)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("TankAIController not possesing a tank"))
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("TankAIController :%s Begin Play"), *(ControlledTank->GetName()))//don't forget toFstring "*"
-	}
-	auto PlayerTank = GetPlayerTank();
-		if (!PlayerTank)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("where are you?"))
-		}
-		else
-		{
-			UE_LOG(LogTemp, Warning, TEXT("I find you!"))
-		}
+	
+	
 
 }
 
 void ATankAIController::Tick(float DeltaTime)
 {
-	if (!GetControlledTank()) { return; }
+	
 	//Get world location if linetrace through crosshair
 	//if it hits the landscape
 	//Tell controlled tank to aim at this point
-	if (GetPlayerTank())
+	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	auto ControlledTank = Cast<ATank>(GetPawn());
+	if (PlayerTank)
 	{
-		FVector OutHitLocation = GetPlayerTank()->GetActorLocation();
+		FVector OutHitLocation = PlayerTank->GetActorLocation();
 
 
-		GetControlledTank()->AimAt(OutHitLocation);
+		ControlledTank->AimAt(OutHitLocation);
+
+		ControlledTank->Fire();
 	}
 
 	
 	
 }
 
-ATank * ATankAIController::GetPlayerTank() const
-{
-	auto PlayerPawn=
-	 GetWorld()->GetFirstPlayerController()->GetPawn();
-	if (!PlayerPawn) { return nullptr; }
-	return Cast<ATank>(PlayerPawn);
-}
 
 

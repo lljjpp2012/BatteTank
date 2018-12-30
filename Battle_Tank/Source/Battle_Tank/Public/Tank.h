@@ -5,10 +5,14 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Tankaimingcomponent.h"
+#include "TankFireBall.h"
 #include "Tank.generated.h"
 
 class UTankBarrel;
 class UTankTurret;
+class UTankTrack;
+
+
 UCLASS()
 class BATTLE_TANK_API ATank : public APawn
 {
@@ -35,12 +39,34 @@ public:
 
 	void AimAt(FVector OutHitLocation);
 	
+
+
 	UFUNCTION(BlueprintCallable,Category=Setup)
 	void SetBarrelReference(UTankBarrel*BarrelToSet);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
-		void SetTurretReference(UTankTurret*TurretToSet);
+	void SetTurretReference(UTankTurret*TurretToSet);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+		void SetTrackReference(UTankTrack*LeftTrackToSet,UTankTrack*RightTrackToSet);
+
+
+
+
 
 	UPROPERTY(EditAnywhere, Category = Firing)
-		float LaunchSpeed = 100000;//Sensible starting value of 1000m/s
+		float LaunchSpeed = 4000;//Sensible starting value of 1000m/s
+
+	UFUNCTION(BlueprintCallable,Category = Fire)
+		void Fire();
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+		TSubclassOf<ATankFireBall>TankFireBlueprint;
+	//Local barrel reference for spawning projectile(tankfire-ball)
+	UTankBarrel*Barrel = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, Category =Firing)
+	float ReloadTimeInSeconds = 3.f;
+	
+	double LastFireTime = 0;
 };

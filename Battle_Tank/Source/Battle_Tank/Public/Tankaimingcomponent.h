@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "TankTrack.h"
 #include "Tankaimingcomponent.generated.h"
 
 //class UTankBarrel;//Forward Declaration
@@ -24,7 +25,7 @@ public:
 
 	void SetTurretReference(UTankTurret*TurretToSet);
 	
-
+	void SetTrackReference(UTankTrack*LeftTrackToSet,UTankTrack*RightTrackToSet);
 protected:
 	// Called when the game starts
 	//virtual void BeginPlay() override;
@@ -41,4 +42,6 @@ private:
 	void MoveBarrelTowards(FVector AimDirection);
 	UTankBarrel*Barrel = nullptr;
 	UTankTurret*Turret = nullptr;
+	UTankTrack*LeftTrack = nullptr;
+	UTankTrack*RightTrack = nullptr;
 };

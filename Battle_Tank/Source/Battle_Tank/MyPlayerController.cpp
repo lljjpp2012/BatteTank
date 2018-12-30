@@ -40,14 +40,14 @@ bool AMyPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
 	int32 ViewporSizeX, ViewportSizeY;
 	GetViewportSize(ViewporSizeX, ViewportSizeY);
 	auto ScreenLocation = FVector2D(ViewporSizeX*CrossHairXLocation, ViewportSizeY*CrossHairYLocation);
-	UE_LOG(LogTemp, Warning, TEXT("ScreenLocation:%s"), *ScreenLocation.ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("ScreenLocation:%s"), *ScreenLocation.ToString());
 	//"De-project" the screen position of the crosshair to a world direction
 	//Line-trace along that Lookdirection,and see what we hit(up to max range)
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
 		GetLookVectorHitLocation(LookDirection, OutHitLocation);
-		UE_LOG(LogTemp, Warning, TEXT("OutHitLocation:%s"), *OutHitLocation.ToString());
+		//UE_LOG(LogTemp, Warning, TEXT("OutHitLocation:%s"), *OutHitLocation.ToString());
 	}
 	
 	
@@ -80,7 +80,8 @@ bool AMyPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVecto
 	}
 	else
 	{
-		HitLocation = EndLocation;
+		HitLocation = cameraStartLocation + (LookDirection * 2000);
+		return true;
 	}
 	return false;
 }
@@ -96,14 +97,14 @@ void AMyPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	auto ControlledTank = GetControlledTank();
-	if (!ControlledTank)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController not possesing a tank"))
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController :%s Begin Play"),*(ControlledTank->GetName()))//don't forget toFstring "*"
-	}
+	//if (!ControlledTank)
+	//{
+	//	UE_LOG(LogTemp, Warning, TEXT("PlayerController not possesing a tank"))
+	//}
+	//else
+	//{
+	//	UE_LOG(LogTemp, Warning, TEXT("PlayerController :%s Begin Play"),*(ControlledTank->GetName()))//don't forget toFstring "*"
+	//}
 	
 
 }
